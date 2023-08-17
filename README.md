@@ -42,7 +42,7 @@ $ yarn run test:cov
 
 ## Team Entropy
 * Oswaldo Yánez
-
+* Jesus Manzano
 ## License
 
 Nest is [MIT licensed](LICENSE).
