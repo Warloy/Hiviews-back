@@ -40,6 +40,9 @@ $ yarn run test:cov
 ```
 
 
+## Team Entropy
+* Oswaldo Yánez
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
