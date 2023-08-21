@@ -3,7 +3,7 @@
 </p>
 
  
-# Hiviws Backend
+# Hiviews Backend
 * Hiviews is a mobile application that allows users to write and share movie reviews. The Hiviews backend is written in TypeScript and uses the NestJS library. The backend includes a variety of features, such as the ability to save and retrieve reviews, search for movies and view other users' reviews.
 
 
