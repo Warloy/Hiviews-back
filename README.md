@@ -1,5 +1,5 @@
 <p align="center">
-  <image src="./hiviews-logo/2-hilogo-alternativo.svg" width="200" alt="Hiviews Logo" />
+  <image src="./hiviews-logo/2-hilogo-alternativo.svg" width="300" alt="Hiviews Logo" />
 </p>
 
  
