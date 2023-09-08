@@ -7,6 +7,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { UserModule } from './user/user.module';
 import { ReviewModule } from './review/review.module';
+import { ThreadModule } from './thread/thread.module';
+import { CommentModule } from './comment/comment.module';
  
 //paquetes de node usualmente van al inicio.
 
@@ -16,7 +18,7 @@ import { ReviewModule } from './review/review.module';
          rootPath: join(__dirname,'..','public'), 
     }), UserModule, ReviewModule, 
     // En esta parte se va configurar la conexion con la BD
-    MongooseModule.forRoot('mongodb://localhost:27017/backend-hiviews')
+    MongooseModule.forRoot('mongodb://localhost:27017/backend-hiviews'), ThreadModule, CommentModule
      
   ], 
 
