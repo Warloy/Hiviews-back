@@ -16,9 +16,9 @@ import { CommentModule } from './comment/comment.module';
   imports: [ 
     ServeStaticModule.forRoot({ 
          rootPath: join(__dirname,'..','public'), 
-    }), UserModule, ReviewModule, 
+    }), UserModule, ReviewModule, ThreadModule, CommentModule,
     // En esta parte se va configurar la conexion con la BD
-    MongooseModule.forRoot('mongodb://localhost:27017/backend-hiviews'), ThreadModule, CommentModule
+    MongooseModule.forRoot('mongodb://localhost:27017/backend-hiviews'), 
      
   ], 
 
