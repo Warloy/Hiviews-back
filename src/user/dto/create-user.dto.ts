@@ -21,16 +21,13 @@ export class CreateUserDto {
     @IsAlpha()
     @MinLength(3)
     lastName: string;
-
-    
-    
     
     //Version I Format YYYY-DD-MM
     @IsDateString()
     birthday: Date;
     
 
-    @IsIn(['masculino', 'femenino','other'])
+    @IsIn(['m', 'f','o'])
     gender: string
 
 
