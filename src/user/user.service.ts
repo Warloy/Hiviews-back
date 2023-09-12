@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose/dist/common';
-import { Model, now} from 'mongoose';
+import { Model, isValidObjectId, now} from 'mongoose';
 import { User } from './entities/user.entity';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 
 @Injectable()
@@ -33,12 +34,43 @@ export class UserService {
     }
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  findAll(paginationDto: PaginationDto) {
+    
+    const {limit = 10, offset = 0} = paginationDto
+    return this.userModel.find()
+      .limit(limit)
+      .skip(offset)
+      .sort({
+        nro: 1
+      })
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  }
+  async findOne(term: string) {
+    let user: User
+
+    //Si queremos buscar por nro
+    
+   if(!isNaN(+term)){
+
+    user = await this.userModel.findOne({userId: term})
+
+   }
+
+    // Si queremos buscar por el mongo ID
+    if( !user &&isValidObjectId(term)){
+      user = await this.userModel.findById(term)
+    }
+    //Si queremos buscar por username
+    if (! user) {
+      user = await this.userModel.findOne({userName: term.toLocaleLowerCase().trim()})
+     }
+    
+    //Para casos de no encontrar nada
+    if(!user)
+    throw new NotFoundException(`user with id,username or nro "${term}" not found`) 
+
+  return user;
+
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

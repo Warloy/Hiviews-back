@@ -1,8 +1,13 @@
-import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength} from "class-validator";
+import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength, Min, IsInt, IsPositive } from 'class-validator';
 
 
 
 export class CreateUserDto {
+    @IsPositive()
+    @IsInt()
+    @Min(1)
+    userId:number
+
     @IsEmail()
     @IsString()
     email: string;

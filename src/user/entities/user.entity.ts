@@ -5,6 +5,13 @@ import { Document } from "mongoose";
 
 @Schema()
 export class User extends Document {
+    
+    @Prop({
+        unique: true,
+        required: true,
+        index: true
+    })
+    userId: number
 
     @Prop({
         unique: true,
