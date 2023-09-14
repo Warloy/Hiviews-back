@@ -5,13 +5,6 @@ import { Document } from "mongoose";
 
 @Schema()
 export class User extends Document {
-    
-    @Prop({
-        unique: true,
-        required: true,
-        index: true
-    })
-    userId: number
 
     @Prop({
         unique: true,
@@ -26,6 +19,14 @@ export class User extends Document {
         index: true
     })
     userName: string
+    @Prop({
+        unique: true,
+        required: true,
+        index: true,
+        select:false
+    })
+    password: string
+
 
     @Prop({
         required: true,
@@ -50,6 +51,19 @@ export class User extends Document {
         index: true
     })
     gender: string
+
+
+    @Prop({
+      type: [],
+      default: ['user'],   
+    })
+    roles: string[]
+    
+    @Prop({
+      default: true,   
+    })
+    status: boolean
+
 }
 
 
