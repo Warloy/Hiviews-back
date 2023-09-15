@@ -54,10 +54,11 @@ export class User extends Document {
 
 
     @Prop({
-      type: [],
-      default: ['user'],   
+        type: String,
+        enum: ['admin', 'user'],
+        default: 'user'   
     })
-    roles: string[]
+    role: string
     
     @Prop({
       default: true,   

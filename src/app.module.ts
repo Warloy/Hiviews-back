@@ -3,7 +3,7 @@ import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MongooseModule } from '@nestjs/mongoose';
-
+import { ConfigModule } from '@nestjs/config/dist';
 // Importacion de modulos
 import { ReviewModule } from './review/review.module';
 import { ThreadModule } from './thread/thread.module';
@@ -16,6 +16,8 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({ 
   imports: [ 
+    ConfigModule.forRoot(),
+
     ServeStaticModule.forRoot({ 
          rootPath: join(__dirname,'..','public'), 
     }), 
