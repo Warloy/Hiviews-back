@@ -40,7 +40,7 @@ export class CreateUserDto {
     @IsIn(['m', 'f','o'])
     gender: string
 
-    @IsArray()
-    roles: [];
+    @IsString()
+    role: string;
 
 }

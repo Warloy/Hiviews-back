@@ -1,15 +1,18 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
+import { MongooseModule } from '@nestjs/mongoose';
+import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './entities/user.entity';
-import { PassportModule } from '@nestjs/passport';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([{
         name: User.name,
         schema: UserSchema
@@ -17,11 +20,11 @@ import { JwtModule } from '@nestjs/jwt';
       PassportModule.register({defaultStrategy: 'jwt'}),
       //Para configurando el modulo de JWT
       JwtModule.registerAsync({
-        imports: [],
-        inject: [],
-        useFactory: () => {
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService ) => {
           return {
-            secret: process.env.JWT_SEED,
+            secret: configService.get('JWT_SECRET') ,
             signOptions: {
               expiresIn: "1h"
             }
@@ -31,7 +34,10 @@ import { JwtModule } from '@nestjs/jwt';
       
   ],
   exports: [
-    MongooseModule
+    MongooseModule,
+    JwtStrategy,
+    PassportModule,
+    JwtModule
   ]
 })
 export class AuthModule {}
