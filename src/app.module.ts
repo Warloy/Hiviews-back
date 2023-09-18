@@ -12,21 +12,28 @@ import { PostModule } from './post/post.module';
 import { TagModule } from './tag/tag.module';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
+import { EnvConfiguration } from './config/env.config';
+import { JoiValidationSchema } from './config/joi.validation';
  
 
 @Module({ 
   imports: [ 
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      load: [EnvConfiguration],
+      validationSchema: JoiValidationSchema,
+    }),
 
     ServeStaticModule.forRoot({ 
          rootPath: join(__dirname,'..','public'), 
     }), 
+    // En esta parte se va configurar la conexion con la BD
+    MongooseModule.forRoot(process.env.MONGODB, {
+      dbName: 'hiviewsdb'
+    }), 
+    
     //Modulos
     AuthModule, ReviewModule, ThreadModule, CommentModule,
     PostModule, TagModule, CategoryModule, 
-    // En esta parte se va configurar la conexion con la BD
-    MongooseModule.forRoot('mongodb://localhost:27017/backend-hiviews'), 
-    
      
   ], 
 
