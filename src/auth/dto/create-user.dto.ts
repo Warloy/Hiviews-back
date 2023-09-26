@@ -1,4 +1,4 @@
-import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength, MaxLength, IsArray } from 'class-validator';
+import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength, MaxLength, IsArray, IsOptional } from 'class-validator';
 
 
 
@@ -40,7 +40,8 @@ export class CreateUserDto {
     @IsIn(['m', 'f','o'])
     gender: string
 
-    @IsString()
-    role: string;
+    @IsArray()
+    @IsOptional()
+    roles?: string;
 
 }

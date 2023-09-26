@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateThreadDto } from './dto/create-thread.dto';
 import { UpdateThreadDto } from './dto/update-thread.dto';
 
+
 @Injectable()
 export class ThreadService {
   create(createThreadDto: CreateThreadDto) {
