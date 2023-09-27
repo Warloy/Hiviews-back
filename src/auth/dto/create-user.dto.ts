@@ -1,8 +1,9 @@
-import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength} from "class-validator";
+import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength, MaxLength, IsArray, IsOptional } from 'class-validator';
 
 
 
 export class CreateUserDto {
+ 
     @IsEmail()
     @IsString()
     email: string;
@@ -11,6 +12,15 @@ export class CreateUserDto {
     @Matches(/.*[a-zA-Z].*/)
     @MinLength(4)
     userName: string
+
+    @IsString()
+    @MinLength(6)
+    @MaxLength(50)
+    @Matches(
+        /(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+        message: 'The password must have a Uppercase, lowercase letter and a number'
+    })
+    password: string
 
     @IsString()
     @IsAlpha()
@@ -30,5 +40,8 @@ export class CreateUserDto {
     @IsIn(['m', 'f','o'])
     gender: string
 
+    @IsArray()
+    @IsOptional()
+    roles?: string;
 
 }

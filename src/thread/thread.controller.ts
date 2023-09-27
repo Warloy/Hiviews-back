@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ThreadService } from './thread.service';
 import { CreateThreadDto } from './dto/create-thread.dto';
 import { UpdateThreadDto } from './dto/update-thread.dto';
+import { Auth } from 'src/auth/decorators';
 
+@Auth()
 @Controller('thread')
 export class ThreadController {
   constructor(private readonly threadService: ThreadService) {}

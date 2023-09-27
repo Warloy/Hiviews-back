@@ -3,22 +3,35 @@ import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MongooseModule } from '@nestjs/mongoose';
-
-
-import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config/dist';
+// Importacion de modulos
 import { ReviewModule } from './review/review.module';
 import { ThreadModule } from './thread/thread.module';
 import { CommentModule } from './comment/comment.module';
+import { TagModule } from './tag/tag.module';
+import { CategoryModule } from './category/category.module';
+import { AuthModule } from './auth/auth.module';
+import { EnvConfiguration } from './config/env.config';
+import { JoiValidationSchema } from './config/joi.validation';
+import { MovieApiModule } from './movie-api/movie-api.module';
  
-//paquetes de node usualmente van al inicio.
 
 @Module({ 
   imports: [ 
+    ConfigModule.forRoot({
+      load: [EnvConfiguration],
+      validationSchema: JoiValidationSchema,
+    }),
+
     ServeStaticModule.forRoot({ 
          rootPath: join(__dirname,'..','public'), 
-    }), UserModule, ReviewModule, ThreadModule, CommentModule,
+    }), 
     // En esta parte se va configurar la conexion con la BD
-    MongooseModule.forRoot('mongodb://localhost:27017/backend-hiviews'), 
+    MongooseModule.forRoot(process.env.MONGODB), 
+    
+    //Modulos
+    AuthModule, ReviewModule, ThreadModule, CommentModule,
+   TagModule, CategoryModule, MovieApiModule, 
      
   ], 
 
