@@ -22,7 +22,7 @@ export class ReviewService {
       // Asignar el usuario a la reseña
       review.user = userId;
 
-      // Guardar la revisión
+      // Guardar la reseña
       await review.save();
 
       // Obtener el usuario
@@ -32,7 +32,7 @@ export class ReviewService {
         throw new BadRequestException('User not found');
       }
 
-      // Agregar la revisión al array de revisiones del usuario
+      // Agregar la reseña al array de revisiones del usuario
       user.reviews.push(review);
 
        
