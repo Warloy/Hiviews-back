@@ -2,13 +2,12 @@ import { BadRequestException, HttpStatus, Injectable, InternalServerErrorExcepti
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
+import { JwtService } from '@nestjs/jwt';
 
 import * as bcrypt from 'bcrypt'
-
 import { User } from './entities/user.entity';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { JwtService } from '@nestjs/jwt';
 
 
 @Injectable()
@@ -53,6 +52,8 @@ export class AuthService {
     
     if(!bcrypt.compareSync(password, user.password))
       throw new UnauthorizedException('Invalid Credentials - password')
+
+      
     
       return {
         data: user,

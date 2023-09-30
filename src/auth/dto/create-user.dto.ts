@@ -1,4 +1,4 @@
-import { IsAlpha, IsDateString, IsEmail, IsIn, IsString, Matches, MinLength, MaxLength, IsArray, IsOptional } from 'class-validator';
+import { IsAlpha, IsDateString, IsEmail, IsString, Matches, MinLength, MaxLength, IsArray, IsOptional, IsUrl } from 'class-validator';
 
 
 
@@ -30,15 +30,23 @@ export class CreateUserDto {
     @IsString()
     @IsAlpha()
     @MinLength(3)
-    lastName: string;
+    surName: string;
     
     //Version I Format YYYY-DD-MM
     @IsDateString()
     birthday: Date;
     
 
-    @IsIn(['m', 'f','o'])
-    gender: string
+    @IsString()
+    @MaxLength(255)
+    @IsOptional()
+    bio?: string
+
+    @IsString()
+    @IsUrl()
+    @IsOptional()
+    avatar?: string
+
 
     @IsArray()
     @IsOptional()

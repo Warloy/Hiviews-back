@@ -1,26 +1,55 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Review } from './entities/review.entity';
 import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
+import { User } from '../auth/entities/user.entity'; // Importa el modelo de usuario
 
 @Injectable()
 export class ReviewService {
-  create(createReviewDto: CreateReviewDto) {
-    return 'This action adds a new review';
-  }
+  constructor(
+    @InjectModel(Review.name)
+    private readonly reviewModel: Model<Review>,
+    @InjectModel(User.name)
+    private readonly userModel: Model<User>,
+  ) {}
 
-  findAll() {
-    return `This action returns all review`;
-  }
+  async create(userId: User, createReviewDto: CreateReviewDto) {
+    try {
+      // Crear la reseña
+      const review = new this.reviewModel(createReviewDto);
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
-  }
+      // Asignar el usuario a la reseña
+      review.user = userId;
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
-  }
+      // Guardar la revisión
+      await review.save();
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+      // Obtener el usuario
+      const user = await this.userModel.findById(userId);
+
+      if (!user) {
+        throw new BadRequestException('User not found');
+      }
+
+      // Agregar la revisión al array de revisiones del usuario
+      user.reviews.push(review);
+
+       
+      // Guardar el usuario actualizado
+      await user.save();
+
+      return review
+    } catch (error) {
+      this.handleExceptions(error);
+    }
+  }
+  private handleExceptions(error: any) {
+    if (error.code === 11000) {
+      throw new BadRequestException(`Review already exists in the database: ${JSON.stringify(error.keyValue)}`);
+    }
+
+    console.log(error);
+    throw new InternalServerErrorException(`Can't create review - Check server logs`);
   }
 }

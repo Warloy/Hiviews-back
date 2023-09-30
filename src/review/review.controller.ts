@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
-import { UpdateReviewDto } from './dto/update-review.dto';
 import { Auth } from 'src/auth/decorators';
+import { GetUser } from 'src/auth/decorators/get-user.decorator'; // Importa el decorador para obtener el usuario autenticado
+import { User } from 'src/auth/entities/user.entity';
 
 @Auth()
 @Controller('review')
@@ -10,27 +11,11 @@ export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
   @Post()
-  create(@Body() createReviewDto: CreateReviewDto) {
-    return this.reviewService.create(createReviewDto);
-  }
+  async createReview(@GetUser() user:User, @Body() createReviewDto: CreateReviewDto) {
+    // Aquí asumimos que tienes un decorador @GetUser() que obtiene el usuario autenticado
+    const userId = user.id; // Obtén el userId del usuario autenticado
 
-  @Get()
-  findAll() {
-    return this.reviewService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reviewService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
-    return this.reviewService.update(+id, updateReviewDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.reviewService.remove(+id);
+    return await this.reviewService.create(userId, createReviewDto);
   }
 }
+
