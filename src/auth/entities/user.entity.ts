@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
+import { Review } from "../../review/entities/review.entity";
 
 
 
@@ -38,7 +39,7 @@ export class User extends Document {
         required: true,
         index: true
     })
-    lastName: string;
+    surName: string;
 
     @Prop({
         required: true,
@@ -50,15 +51,23 @@ export class User extends Document {
         required: true,
         index: true
     })
-    gender: string
+    bio?: string;
+    
+    @Prop({
+        index: true
+    })
+    avatar?: string;
 
 
     @Prop({
-        type: String,
-        enum: ['admin', 'user'],
-        default: 'user'   
+        type: [],
+        default: ['user']
     })
-    role: string
+    roles?: string[]
+
+    @Prop({type: [{type: Types.ObjectId, ref: 'Review.name' , required: true}] })
+    reviews: Types.Array<Review>;
+    
     
     @Prop({
       default: true,   

@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const { id } = payload;
     
     try {
-      const user = await this.userModel.findOne({_id: id}).exec();
+      const user = await this.userModel.findOne({_id: id, status: true}).exec();
 
       if (!user) {
         throw new UnauthorizedException('Token not valid');
@@ -35,7 +35,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         throw new UnauthorizedException('User is inactive, talk with an admin');
       }
       
-      
+
       return user;
     } catch (error) {
       throw new UnauthorizedException('Token not valid');

@@ -8,12 +8,12 @@ import { ConfigModule } from '@nestjs/config/dist';
 import { ReviewModule } from './review/review.module';
 import { ThreadModule } from './thread/thread.module';
 import { CommentModule } from './comment/comment.module';
-import { PostModule } from './post/post.module';
 import { TagModule } from './tag/tag.module';
 import { CategoryModule } from './category/category.module';
 import { AuthModule } from './auth/auth.module';
 import { EnvConfiguration } from './config/env.config';
 import { JoiValidationSchema } from './config/joi.validation';
+import { MovieApiModule } from './movie-api/movie-api.module';
  
 
 @Module({ 
@@ -27,13 +27,11 @@ import { JoiValidationSchema } from './config/joi.validation';
          rootPath: join(__dirname,'..','public'), 
     }), 
     // En esta parte se va configurar la conexion con la BD
-    MongooseModule.forRoot(process.env.MONGODB, {
-      dbName: 'hiviewsdb'
-    }), 
+    MongooseModule.forRoot(process.env.MONGODB), 
     
     //Modulos
     AuthModule, ReviewModule, ThreadModule, CommentModule,
-    PostModule, TagModule, CategoryModule, 
+   TagModule, CategoryModule, MovieApiModule, 
      
   ], 
 
