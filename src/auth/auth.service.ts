@@ -27,19 +27,27 @@ export class AuthService {
 
       const {password, ...useData} = createUserDto
 
+
+
+
       const user = await this.userModel.create({
         ...useData,
-        password: bcrypt.hashSync(password, 10)
+        password: bcrypt.hashSync(password, 10),
       })
+      
+
       return {
         data: user,
-        statusCode: HttpStatus.CREATED
+        statusCode: HttpStatus.CREATED,
+        message: 'User created successfully'
       };
     } catch (error) {
       this.handleExceptions(error)
       
     }
   }
+  
+  
 
   async login(loginUserDto:LoginUserDto){
     const {password, email} = loginUserDto
@@ -52,15 +60,12 @@ export class AuthService {
     if(!bcrypt.compareSync(password, user.password))
       throw new UnauthorizedException('Invalid Credentials - password')
 
-      
-    
       return {
         data: user,
         token: this.getJwtToken({id: user._id}),
         status: HttpStatus.OK
 
       };
-
 
   }
 
