@@ -14,6 +14,7 @@ import { AuthModule } from './auth/auth.module';
 import { EnvConfiguration } from './config/env.config';
 import { JoiValidationSchema } from './config/joi.validation';
 import { MovieApiModule } from './movie-api/movie-api.module';
+import { FilesModule } from './files/files.module';
  
 
 @Module({ 
@@ -31,7 +32,7 @@ import { MovieApiModule } from './movie-api/movie-api.module';
     
     //Modulos
     AuthModule, ReviewModule, ThreadModule, CommentModule,
-   TagModule, CategoryModule, MovieApiModule, 
+   TagModule, CategoryModule, MovieApiModule, FilesModule, 
      
   ], 
 
