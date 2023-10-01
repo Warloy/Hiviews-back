@@ -7,7 +7,7 @@ import { User } from 'src/auth/entities/user.entity';
 import { ParseMongoIdPipe } from 'src/common/dto/pipes/parse-mongo-id.pipe';
 import { UpdateReviewDto } from './dto/update-review.dto';
 
-//@Auth()
+@Auth()
 @Controller('review')
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
