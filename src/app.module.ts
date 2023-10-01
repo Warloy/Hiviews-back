@@ -28,7 +28,9 @@ import { FilesModule } from './files/files.module';
          rootPath: join(__dirname,'..','public'), 
     }), 
     // En esta parte se va configurar la conexion con la BD
-    MongooseModule.forRoot(process.env.MONGODB), 
+    MongooseModule.forRoot(process.env.MONGODB, {
+      dbName: 'hiviews-bd'
+    }), 
     
     //Modulos
     AuthModule, ReviewModule, ThreadModule, CommentModule,
