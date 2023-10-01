@@ -1,8 +1,9 @@
-import { IsDateString, IsNumber, IsString, IsMongoId } from 'class-validator';
+import { IsDateString, IsNumber, IsString, IsMongoId, IsOptional } from 'class-validator';
 
 export class CreateReviewDto {
   @IsString()
-  author: string;
+  @IsOptional()
+  author?: string;
 
   @IsString()
   description: string;

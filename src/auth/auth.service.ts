@@ -33,7 +33,6 @@ export class AuthService {
       })
       return {
         data: user,
-        token: this.getJwtToken({id: user._id}),
         statusCode: HttpStatus.CREATED
       };
     } catch (error) {
@@ -58,6 +57,7 @@ export class AuthService {
       return {
         data: user,
         token: this.getJwtToken({id: user._id}),
+        status: HttpStatus.OK
 
       };
 
