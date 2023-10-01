@@ -15,6 +15,7 @@ import { EnvConfiguration } from './config/env.config';
 import { JoiValidationSchema } from './config/joi.validation';
 import { MovieApiModule } from './movie-api/movie-api.module';
 import { FilesModule } from './files/files.module';
+import { AppController } from './app.controller';
  
 
 @Module({ 
@@ -37,7 +38,9 @@ import { FilesModule } from './files/files.module';
    TagModule, CategoryModule, MovieApiModule, FilesModule, 
      
   ], 
-
+  controllers:[
+    AppController
+  ]
   
 
 }) 
