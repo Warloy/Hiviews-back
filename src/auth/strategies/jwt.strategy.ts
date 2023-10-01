@@ -31,7 +31,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         throw new UnauthorizedException('Token not valid');
       }
 
-      if (!user.status) {
+      if (user.status === false) {
         throw new UnauthorizedException('User is inactive, talk with an admin');
       }
       

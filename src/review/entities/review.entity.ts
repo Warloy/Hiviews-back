@@ -5,7 +5,7 @@ import { User } from 'src/auth/entities/user.entity';
 @Schema()
 export class Review extends Document {
   @Prop()
-  author: string;
+  author?: string;
 
   @Prop()
   description: string;
@@ -27,6 +27,12 @@ export class Review extends Document {
 
   @Prop()
   comments: number;
+      
+  @Prop({
+    default: true,   
+  })
+  status: boolean
+
 
   @Prop({ type: Types.ObjectId, ref: 'User.name' })
   user: User;
