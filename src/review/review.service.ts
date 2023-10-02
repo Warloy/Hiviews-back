@@ -21,7 +21,7 @@ export class ReviewService {
       const review = await this.reviewModel.create({
         ...createReviewDto,
         author: user.userName,  // Almacenar el nombre de usuario en la reseña
-        userId: user._id
+        authorId: user._id
       });
       
 
