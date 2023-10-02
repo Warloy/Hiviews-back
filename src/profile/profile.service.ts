@@ -61,7 +61,7 @@ export class ProfileService {
         throw new BadRequestException('Password and birthday cannot be updated');
       }
   
-      // Check if the updated username is taken
+      
       if (updateProfileDto.userName) {
         const usernameTaken = await this.userModel.findOne({ userName: updateProfileDto.userName.toLowerCase() });
         if (usernameTaken && usernameTaken._id.toString() !== profileId) {
@@ -70,7 +70,7 @@ export class ProfileService {
         updateProfileDto.userName = updateProfileDto.userName.toLowerCase();
       }
   
-      // Check if the updated email is taken
+      
       if (updateProfileDto.email) {
         const emailTaken = await this.userModel.findOne({ email: updateProfileDto.email.toLowerCase() });
         if (emailTaken && emailTaken._id.toString() !== profileId) {

@@ -58,36 +58,34 @@ export class ReviewService {
 
 
   async findOne(term: string) {
-    
-    let review: Review
- 
-    if(!isNaN(+term)){
- 
-     review = await this.reviewModel.findOne({nro: term})
- 
-    }
- 
-    // MongoID
-    if( !review &&isValidObjectId(term)) {
-     review = await this.reviewModel.findById(term)
-    }
-    // autor
-    if (! review) {
-     review = await this.reviewModel.findOne({author: term.toLocaleLowerCase().trim()})
-    }
-    //por titulo
-    if (! review) {
-     review = await this.reviewModel.findOne({title: term.toLocaleLowerCase().trim()})
-    }
-     
-    //Para casos de no encontrar nada
-     if(!review)
-       throw new NotFoundException(`review with id, author"${term}" not found`) 
- 
-     return review;
-   }
+    let review: Review;
   
-   async updateReview(reviewId: string, updateReviewDto: { description: string }) {
+    // Check if the term is a valid MongoID
+    if (isValidObjectId(term)) {
+      review = await this.reviewModel.findById(term);
+    }
+  
+    // Check if the term is an author
+    if (!review) {
+      review = await this.reviewModel.findOne({ author: term.toLowerCase().trim() });
+    }
+  
+    // Check if the term is a movie title (partial match)
+    if (!review) {
+      review = await this.reviewModel.findOne({
+        movie: { $regex: new RegExp(term, 'i') }  // Case-insensitive partial match using regex
+      });
+    }
+  
+    // Throw NotFoundException if no review is found
+    if (!review) {
+      throw new NotFoundException(`Review with ID, author, or movie "${term}" not found`);
+    }
+  
+    return review;
+  }
+  
+   async updateReview(reviewId: string, updateReviewDto: UpdateReviewDto) {
     try {
       const existingReview = await this.reviewModel.findById(reviewId);
   
