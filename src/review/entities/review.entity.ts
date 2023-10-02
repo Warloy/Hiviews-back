@@ -7,39 +7,36 @@ export class Review extends Document {
   @Prop()
   author: string;
   
-  @Prop()
-  title: string;
   
   @Prop()
-  userId: string;
-
-  @Prop()
   description: string;
-
+  
   @Prop()
   movie: string;
-
+  
   @Prop()
   image: string;
-
+  
   @Prop()
   date: Date;
   
   @Prop()
   rate: number;
-
+  
   @Prop()
   likes: number;
-
+  
   @Prop()
   comments: number;
-      
+  
   @Prop({
     default: true,   
   })
   status: boolean
-
-
+  
+  @Prop()
+  userId: string;
+  
 
   @Prop({ type: Types.ObjectId, ref: 'User.name' })
   user: User;
