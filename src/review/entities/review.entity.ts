@@ -8,6 +8,9 @@ export class Review extends Document {
   author: string;
   
   @Prop()
+  title: string;
+  
+  @Prop()
   userId: string;
 
   @Prop()

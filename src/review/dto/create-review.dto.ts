@@ -6,6 +6,9 @@ export class CreateReviewDto {
   author?: string;
   
   @IsString()
+  title: string
+
+  @IsString()
   description: string;
 
   @IsString()

@@ -44,24 +44,43 @@ export class ProfileService {
      return profile;
    }
 
- async update(profileId: string, updateProfileDto: UpdateUserDto ) {
+   async update(profileId: string, updateProfileDto: UpdateUserDto) {
     try {
       const existingProfile = await this.userModel.findById(profileId);
-
+  
       if (!existingProfile) {
         throw new NotFoundException(`Profile with ID "${profileId}" not found`);
       }
-
+  
       if (!existingProfile.status) {
         throw new BadRequestException(`Profile with ID "${profileId}" is not active`);
       }
-
+  
+      // Ensure password and birthday are not updated
+      if (updateProfileDto.password || updateProfileDto.birthday) {
+        throw new BadRequestException('Password and birthday cannot be updated');
+      }
+  
+      // Check if the updated username is taken
       if (updateProfileDto.userName) {
+        const usernameTaken = await this.userModel.findOne({ userName: updateProfileDto.userName.toLowerCase() });
+        if (usernameTaken && usernameTaken._id.toString() !== profileId) {
+          throw new BadRequestException(`Username "${updateProfileDto.userName}" is already taken`);
+        }
         updateProfileDto.userName = updateProfileDto.userName.toLowerCase();
       }
-
+  
+      // Check if the updated email is taken
+      if (updateProfileDto.email) {
+        const emailTaken = await this.userModel.findOne({ email: updateProfileDto.email.toLowerCase() });
+        if (emailTaken && emailTaken._id.toString() !== profileId) {
+          throw new BadRequestException(`Email "${updateProfileDto.email}" is already taken`);
+        }
+        updateProfileDto.email = updateProfileDto.email.toLowerCase();
+      }
+  
       const updatedProfile = await this.userModel.findByIdAndUpdate(profileId, updateProfileDto, { new: true });
-
+  
       return {
         profile: updatedProfile,
         message: 'Profile updated successfully.',
@@ -70,7 +89,7 @@ export class ProfileService {
       this.handleExceptions(error);
     }
   }
-
+  
 
   async remove(profileId: string) {
     try {
