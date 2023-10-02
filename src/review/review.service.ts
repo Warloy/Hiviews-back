@@ -21,6 +21,7 @@ export class ReviewService {
       const review = await this.reviewModel.create({
         ...createReviewDto,
         author: user.userName,  // Almacenar el nombre de usuario en la reseña
+        userId: user._id
       });
       
 
@@ -98,7 +99,7 @@ export class ReviewService {
         updateReviewDto.author = updateReviewDto.author.toLowerCase();
       }
 
-      // Actualizar la revisión solo si está activa
+      // Actualizar la reseña solo si está activa
       const updatedReview = await this.reviewModel.findByIdAndUpdate(reviewId, updateReviewDto, { new: true });
 
       return {

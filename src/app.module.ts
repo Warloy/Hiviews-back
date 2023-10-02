@@ -16,6 +16,7 @@ import { JoiValidationSchema } from './config/joi.validation';
 import { MovieApiModule } from './movie-api/movie-api.module';
 import { FilesModule } from './files/files.module';
 import { AppController } from './app.controller';
+import { ProfileModule } from './profile/profile.module';
  
 
 @Module({ 
@@ -35,7 +36,7 @@ import { AppController } from './app.controller';
     
     //Modulos
     AuthModule, ReviewModule, ThreadModule, CommentModule,
-   TagModule, CategoryModule, MovieApiModule, FilesModule, 
+   TagModule, CategoryModule, MovieApiModule, FilesModule, ProfileModule,  
      
   ], 
   controllers:[
