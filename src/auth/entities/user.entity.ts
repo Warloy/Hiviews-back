@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Types } from "mongoose";
 import { Review } from "../../review/entities/review.entity";
+//import { Thread } from "src/thread/entities/thread.entity";
 
 
 
@@ -66,7 +67,12 @@ export class User extends Document {
     roles?: string[]
 
     @Prop({type: [{type: Types.ObjectId, ref: 'Review.name' , required: true}] })
-    reviews: Types.Array<Review>;
+    reviewCollection: Types.Array<Review>;
+    
+
+     //thread
+    // @Prop({type: [{type: Types.ObjectId, ref: 'Thread.name' , required: true}] })
+    // threads: Types.Array<Thread>;
     
     
     @Prop({

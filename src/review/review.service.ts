@@ -33,7 +33,7 @@ export class ReviewService {
       }
 
       // Agregar la reseña al array de revisiones del usuario
-      userRecord.reviews.push(review);
+      userRecord.reviewCollection.push(review);
 
       // Guardar el usuario actualizado
       await userRecord.save();
