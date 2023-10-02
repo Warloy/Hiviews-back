@@ -34,7 +34,7 @@ export class ProfileService {
     }
     // autor
     if (!profile) {
-     profile = await this.userModel.findOne({userName: term.toLocaleLowerCase().trim()})
+     profile = await this.userModel.findOne({username: term.toLocaleLowerCase().trim()})
     }
      
     //Para casos de no encontrar nada
@@ -92,7 +92,7 @@ export class ProfileService {
   
       
       if (updateProfileDto.username) {
-        const usernameTaken = await this.userModel.findOne({ userName: updateProfileDto.username.toLowerCase() });
+        const usernameTaken = await this.userModel.findOne({ username: updateProfileDto.username.toLowerCase() });
         if (usernameTaken && usernameTaken._id.toString() !== profileId) {
           throw new BadRequestException(`Username "${updateProfileDto.username}" is already taken`);
         }

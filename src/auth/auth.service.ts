@@ -28,8 +28,6 @@ export class AuthService {
       const {password, ...useData} = createUserDto
 
 
-
-
       const user = await this.userModel.create({
         ...useData,
         password: bcrypt.hashSync(password, 10),
