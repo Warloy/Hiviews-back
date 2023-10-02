@@ -20,7 +20,7 @@ export class ReviewService {
       // Crear la reseña 
       const review = await this.reviewModel.create({
         ...createReviewDto,
-        author: user.userName,  // Almacenar el nombre de usuario en la reseña
+        author: user.username,  // Almacenar el nombre de usuario en la reseña
         authorId: user._id
       });
       
@@ -102,6 +102,8 @@ export class ReviewService {
   
     return reviews;
   }
+
+
 
    async updateReview(reviewId: string, updateReviewDto: UpdateReviewDto) {
     try {

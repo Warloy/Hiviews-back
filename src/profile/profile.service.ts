@@ -39,10 +39,39 @@ export class ProfileService {
      
     //Para casos de no encontrar nada
      if(!profile)
-       throw new NotFoundException(`review with id, username"${term}" not found`) 
+       throw new NotFoundException(`profile with id, username"${term}" not found`) 
  
      return profile;
    }
+
+
+  async findAllMatch(term: string) {
+    const searchRegex = new RegExp(term, 'i'); // Case-insensitive partial match using regex
+
+    const profiles = await this.userModel.find({
+      $and: [
+        { status: true },
+        {
+          $or: [
+            { userName: { $regex: searchRegex } },
+            {
+              $or: [
+                { name: { $regex: searchRegex } },
+                { surName: { $regex: searchRegex } },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    if (!profiles || profiles.length === 0) {
+      throw new NotFoundException(`No profiles found for the search term "${term}"`);
+    }
+
+    return profiles;
+  }
+
 
    async update(profileId: string, updateProfileDto: UpdateUserDto) {
     try {
@@ -62,12 +91,12 @@ export class ProfileService {
       }
   
       
-      if (updateProfileDto.userName) {
-        const usernameTaken = await this.userModel.findOne({ userName: updateProfileDto.userName.toLowerCase() });
+      if (updateProfileDto.username) {
+        const usernameTaken = await this.userModel.findOne({ userName: updateProfileDto.username.toLowerCase() });
         if (usernameTaken && usernameTaken._id.toString() !== profileId) {
-          throw new BadRequestException(`Username "${updateProfileDto.userName}" is already taken`);
+          throw new BadRequestException(`Username "${updateProfileDto.username}" is already taken`);
         }
-        updateProfileDto.userName = updateProfileDto.userName.toLowerCase();
+        updateProfileDto.username = updateProfileDto.username.toLowerCase();
       }
   
       

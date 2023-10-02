@@ -11,7 +11,7 @@ export class CreateUserDto {
     @IsString()
     @Matches(/.*[a-zA-Z].*/)
     @MinLength(4)
-    userName: string
+    username: string
 
     @IsString()
     @MinLength(6)
@@ -30,7 +30,7 @@ export class CreateUserDto {
     @IsString()
     @IsAlpha()
     @MinLength(3)
-    surName: string;
+    surname: string;
     
     //Version I Format YYYY-DD-MM
     @IsDateString()
