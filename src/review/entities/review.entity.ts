@@ -4,9 +4,11 @@ import { User } from 'src/auth/entities/user.entity';
 
 @Schema()
 export class Review extends Document {
+  
+  @Prop()
+  authorId: string;
   @Prop()
   author: string;
-  
   
   @Prop()
   description: string;
@@ -34,8 +36,6 @@ export class Review extends Document {
   })
   status: boolean
   
-  @Prop()
-  userId: string;
   
 
   @Prop({ type: Types.ObjectId, ref: 'User.name' })

@@ -1,6 +1,10 @@
 import { IsDateString, IsNumber, IsString, IsMongoId, IsOptional } from 'class-validator';
 
 export class CreateReviewDto {
+  
+  @IsMongoId() // Añade esta validación para representar el ID de usuario
+  authorID: string; // Cambiado a string para representar el ID del usuario
+  
   @IsString()
   @IsOptional()
   author?: string;
@@ -25,7 +29,4 @@ export class CreateReviewDto {
 
   @IsNumber()
   comments: number;
-
-  @IsMongoId() // Añade esta validación para representar el ID de usuario
-  userId: string; // Cambiado a string para representar el ID del usuario
 }
