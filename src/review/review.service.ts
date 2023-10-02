@@ -75,6 +75,10 @@ export class ReviewService {
     if (! review) {
      review = await this.reviewModel.findOne({author: term.toLocaleLowerCase().trim()})
     }
+    //por titulo
+    if (! review) {
+     review = await this.reviewModel.findOne({title: term.toLocaleLowerCase().trim()})
+    }
      
     //Para casos de no encontrar nada
      if(!review)
@@ -83,34 +87,34 @@ export class ReviewService {
      return review;
    }
   
-   async updateReview(reviewId: string, updateReviewDto: UpdateReviewDto) {
+   async updateReview(reviewId: string, updateReviewDto: { description: string }) {
     try {
       const existingReview = await this.reviewModel.findById(reviewId);
-
+  
       if (!existingReview) {
         throw new NotFoundException(`Review with ID "${reviewId}" not found`);
       }
-
+  
       if (!existingReview.status) {
         throw new BadRequestException(`Review with ID "${reviewId}" is not active`);
       }
-
-      if (updateReviewDto.author) {
-        updateReviewDto.author = updateReviewDto.author.toLowerCase();
-      }
-
-      // Actualizar la reseña solo si está activa
-      const updatedReview = await this.reviewModel.findByIdAndUpdate(reviewId, updateReviewDto, { new: true });
-
+  
+      // Update only the description
+      const updatedReview = await this.reviewModel.findByIdAndUpdate(
+        reviewId,
+        { description: updateReviewDto.description.toLowerCase() },
+        { new: true }
+      );
+  
       return {
         review: updatedReview,
-        message: 'Review updated successfully.',
+        message: 'Review description updated successfully.',
       };
     } catch (error) {
       this.handleExceptions(error);
     }
   }
-
+  
 
 
    async remove(reviewId: string) {

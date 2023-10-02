@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus
 import { ProfileService } from './profile.service';
 import { ParseMongoIdPipe } from 'src/common/dto/pipes/parse-mongo-id.pipe';
 import { UpdateUserDto } from 'src/auth/dto/update-user.dto';
+import { Auth } from 'src/auth/decorators';
 
 @Controller('profile')
+@Auth()
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
 
