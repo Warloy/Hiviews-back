@@ -85,6 +85,24 @@ export class ReviewService {
     return review;
   }
   
+
+  async findAllMatch(term: string) {
+    let reviews: Review[];
+  
+    
+    reviews = await this.reviewModel.find({
+      movie: { $regex: new RegExp(`^${term}`, 'i') },
+      status: true
+    });
+  
+
+    if (!reviews || reviews.length === 0) {
+      throw new NotFoundException(`No reviews found for movies starting with "${term}"`);
+    }
+  
+    return reviews;
+  }
+
    async updateReview(reviewId: string, updateReviewDto: UpdateReviewDto) {
     try {
       const existingReview = await this.reviewModel.findById(reviewId);

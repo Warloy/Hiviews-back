@@ -29,6 +29,11 @@ export class ReviewController {
     return this.reviewService.findOne(term);
   }
 
+  @Get('match/:term') // New route for partial match
+  async findAllMatch(@Param('term') term: string) {
+    return this.reviewService.findAllMatch(term);
+  }
+
   @Patch(':term')
   update(@Param('term') term: string, @Body() updateReviewDto: UpdateReviewDto) {
     return this.reviewService.updateReview( term, updateReviewDto);
