@@ -53,11 +53,11 @@ export class ProfileService {
         { status: true },
         {
           $or: [
-            { userName: { $regex: searchRegex } },
+            { username: { $regex: searchRegex } },
             {
               $or: [
                 { name: { $regex: searchRegex } },
-                { surName: { $regex: searchRegex } },
+                { surname: { $regex: searchRegex } },
               ],
             },
           ],
