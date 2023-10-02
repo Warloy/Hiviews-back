@@ -15,6 +15,11 @@ export class ProfileController {
     return this.profileService.findAll();
   }
 
+  @Get('match/:term') // New route for partial match
+  findAllMatch(@Param('term') term: string) {
+    return this.profileService.findAllMatch(term);
+  }
+
   @Get(':term')
   findOne(@Param('term') term: string) {
     return this.profileService.findOne(term);

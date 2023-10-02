@@ -20,7 +20,7 @@ export class User extends Document {
         required: true,
         index: true
     })
-    userName: string
+    username: string
     @Prop({
         unique: true,
         required: true,
@@ -40,7 +40,7 @@ export class User extends Document {
         required: true,
         index: true
     })
-    surName: string;
+    surname: string;
 
     @Prop({
         required: true,
