@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /mongo
-
+/static
 .env
 .env.prod
 

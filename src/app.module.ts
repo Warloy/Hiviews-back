@@ -14,7 +14,6 @@ import { AuthModule } from './auth/auth.module';
 import { EnvConfiguration } from './config/env.config';
 import { JoiValidationSchema } from './config/joi.validation';
 import { MovieApiModule } from './movie-api/movie-api.module';
-import { FilesModule } from './files/files.module';
 import { AppController } from './app.controller';
 import { ProfileModule } from './profile/profile.module';
  
@@ -36,7 +35,7 @@ import { ProfileModule } from './profile/profile.module';
     
     //Modulos
     AuthModule, ReviewModule, ThreadModule, CommentModule,
-   TagModule, CategoryModule, MovieApiModule, FilesModule, ProfileModule,  
+   TagModule, CategoryModule, MovieApiModule, ProfileModule,  
      
   ], 
   controllers:[
